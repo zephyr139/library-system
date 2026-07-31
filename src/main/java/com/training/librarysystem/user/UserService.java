@@ -1,5 +1,6 @@
 package com.training.librarysystem.user;
 
+import com.training.librarysystem.auth.JwtService;
 import com.training.librarysystem.auth.LoginDTO;
 import com.training.librarysystem.auth.RegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +26,27 @@ public class UserService {
     @Autowired
     private AuthenticationManager authManager;
 
+    @Autowired
+    private JwtService jwtService;
+
 //    Write a code to validate all regData or do it with Validation dependency
     public Users register(RegistrationDTO regData) {
         Users user = new Users();
 
-//        Default role is member
-        user.setRole(Role.MEMBER);
-
         user.setFirstName(regData.firstName());
         user.setLastName(regData.lastName());
+//        Default role is member
+        user.setRole(Role.MEMBER);
         user.setAge(regData.age());
-
-        if (!emailFormatValidation(regData.email())) {
-            throw new RuntimeException("Invalid email format");
-        }
         user.setEmail(regData.email());
-
+//
+//        TODO: fix the equality of the passwords
+//        if (!(regData.password() == regData.confirmPassword())) {
+//            System.out.println(regData.password());
+//            System.out.println(regData.confirmPassword());
+//            throw new BadCredentialsException("Passwords do not match");
+//        }
+//
 //        encode the password
         user.setPassword(encoder.encode(regData.password()));
         user.setEnabled(true);
@@ -57,18 +63,14 @@ public class UserService {
                     authManager.authenticate(new UsernamePasswordAuthenticationToken(loginData.email(), loginData.password()));
 
             if (auth.isAuthenticated()) {
-                return "Success";
+                return jwtService.generateToken(loginData.email());
             }
         } catch (AuthenticationException e) {
             return "Failure";
+//            TODO: deal with this
         }
 
         return "Failure";
-    }
-
-//    Checks for email format
-    private boolean emailFormatValidation(String email) {
-        return email.contains("@");
     }
 
     public List<Users> getAllUsers() {

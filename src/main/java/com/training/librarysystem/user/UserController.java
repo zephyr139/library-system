@@ -28,6 +28,23 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/member")
+    public String member() {
+        return "Member page";
+    }
+
+    @GetMapping("/librarian")
+    public String librarian() {
+        return "Librarian page";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "Hello, welcome to the Admin panel";
+    }
+
+//    TODO: add test endpoints for role-based access, for example /member, /librarian, and /admin
+
     @PostMapping("/register")
     public Users register(@RequestBody RegistrationDTO regData) {
         return userService.register(regData);
