@@ -27,5 +27,4 @@ public class LibrarianController {
     public List<BookCopy> addBookCopies(@RequestBody BookCopiesDTO bookCopiesDTO) {
         return bookService.addBookCopies(bookCopiesDTO.bookId(),bookCopiesDTO.amount());
     }
-
 }

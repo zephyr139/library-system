@@ -2,6 +2,7 @@ package com.training.librarysystem.book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class BookService {
         return bookRepo.findAll();
     }
 
+    @Transactional
     public List<BookCopy> addBookCopies(Long bookId, int amount) {
         Book book = bookRepo.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));

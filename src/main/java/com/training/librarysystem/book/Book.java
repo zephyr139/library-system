@@ -34,7 +34,8 @@ public class Book {
     @JsonIgnore
     private List<BookCopy> copies = new ArrayList<>();
 
-    @Formula("(SELECT COUNT(*) FROM book_copies bc WHERE bc.id = id)")
+    @Formula("(SELECT COUNT(*) FROM book_copies bc WHERE bc.book_id = id)")
+    @Column(name = "copies_count")
     private int copies_count;
 
 }

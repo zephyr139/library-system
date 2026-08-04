@@ -2,6 +2,7 @@ package com.training.librarysystem.config;
 
 import com.training.librarysystem.auth.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +29,22 @@ public class SecurityConfig {
 
 //    TODO: research
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            @Value("${app.security.jwt.enabled:true}") boolean jwtEnabled
+    ) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable);
+
+        if (!jwtEnabled) {
+            return http
+                    .authorizeHttpRequests(request -> request.anyRequest().permitAll())
+                    .httpBasic(AbstractHttpConfigurer::disable)
+                    .sessionManagement(session ->
+                            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .build();
+        }
+
         return http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/register", "/login", "/getAll").permitAll()
                         .requestMatchers("/member").hasAnyRole("MEMBER","LIBRARIAN","ADMIN")

@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "book_copies")
 public class BookCopy {
-//    TODO: research
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
