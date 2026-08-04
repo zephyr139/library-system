@@ -1,7 +1,22 @@
 package com.training.librarysystem.book;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Formula;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity()
+@Getter
+@Setter
+@Table(name = "books")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String isbn;
@@ -12,6 +27,14 @@ public class Book {
 
     private String publisher;
 
-    private Category category;
+    @Enumerated(EnumType.STRING)
+    private BookCategory category;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<BookCopy> copies = new ArrayList<>();
+
+    @Formula("(SELECT COUNT(*) FROM book_copies bc WHERE bc.id = id)")
+    private int copies_count;
 
 }

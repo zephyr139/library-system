@@ -1,14 +1,27 @@
 package com.training.librarysystem.book;
 
-import java.util.Date;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-public class BookCopy extends Book{
+@Entity
+@Getter
+@Setter
+@Table(name = "book_copies")
+public class BookCopy {
+//    TODO: research
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    private long inventoryCode;
+    @Column(nullable = false, unique = true)
+    private String inventoryCode;
 
-    private long bookId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
 
+    @Enumerated(EnumType.STRING)
     private BookStatus bookStatus;
-
 
 }

@@ -1,7 +1,6 @@
 package com.training.librarysystem.config;
 
 import com.training.librarysystem.auth.JwtFilter;
-import com.training.librarysystem.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/register", "/login", "/getAll").permitAll()
                         .requestMatchers("/member").hasAnyRole("MEMBER","LIBRARIAN","ADMIN")
-                        .requestMatchers("/librarian").hasAnyRole("LIBRARIAN","ADMIN")
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/librarian/**").hasAnyRole("LIBRARIAN","ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
