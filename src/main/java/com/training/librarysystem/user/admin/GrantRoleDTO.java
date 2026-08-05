@@ -1,4 +1,4 @@
-package com.training.librarysystem.auth;
+package com.training.librarysystem.user.admin;
 
 import com.training.librarysystem.user.Role;
 

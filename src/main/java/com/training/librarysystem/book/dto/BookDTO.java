@@ -1,4 +1,6 @@
-package com.training.librarysystem.book;
+package com.training.librarysystem.book.dto;
+
+import com.training.librarysystem.book.BookCategory;
 
 public record BookDTO(
     String isbn,

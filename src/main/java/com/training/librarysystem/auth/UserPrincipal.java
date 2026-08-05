@@ -1,6 +1,7 @@
-package com.training.librarysystem.user;
+package com.training.librarysystem.auth;
 
 
+import com.training.librarysystem.user.Users;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;

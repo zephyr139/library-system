@@ -1,8 +1,8 @@
 package com.training.librarysystem.user;
 
 import com.training.librarysystem.auth.JwtService;
-import com.training.librarysystem.auth.LoginDTO;
-import com.training.librarysystem.auth.RegistrationDTO;
+import com.training.librarysystem.auth.dto.LoginDTO;
+import com.training.librarysystem.auth.dto.RegistrationDTO;
 import com.training.librarysystem.auth.ValidationService;
 import com.training.librarysystem.exceptions.CustomRoleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
